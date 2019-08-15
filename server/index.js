@@ -23,7 +23,7 @@ app.get('/', (req, res) => {
 })
 
 // sync database
-const syncDb = () => db.sync()
+const syncDb = () => db.sync() // { force: true } for testing
 
 // start listening
 app.listen(PORT, async () => {
