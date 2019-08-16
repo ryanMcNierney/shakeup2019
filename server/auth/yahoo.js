@@ -3,7 +3,15 @@ const axios = require('axios')
 const qs = require('qs')
 
 class Yahoo {
-  async refresh() {
+  async getToken() {
+    const data = await Token.findOne({
+      where: { id: 1 }
+    })
+    const { access_token } = data.dataValues
+    return access_token
+  }
+
+  async refreshToken() {
     try {
       // get new access token
       const config = {
