@@ -19,7 +19,6 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.static(path.join(__dirname, '..', 'public')))
 
 // routing
-app.use('/auth', require('./auth'))
 app.use('/api', require('./api'))
 
 app.get('/', (req, res) => {
