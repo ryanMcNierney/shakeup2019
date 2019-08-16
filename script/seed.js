@@ -1,5 +1,5 @@
 const db = require('../db')
-const { Team } = require('../db/models')
+const { Team, Token } = require('../db/models')
 
 const seed = async () => {
   await db.sync({ force: true })
@@ -93,6 +93,17 @@ const seed = async () => {
   ])
 
   console.log(`seeded ${teams.length} teams`)
+
+  const tokens = await Promise.all([
+    Token.create({
+      id: 1,
+      access_token: 'j41E3vKZvQ85kLdepdQlfTLnTenBrgdvq8pHRxE78BSfiedzftBi96YSiiEgcNnxOt1.q5l49HK3pUCwXE0KcWJr.0Zgh7xY6EhCXNA401nf55gY5zAGN8qmmVr5UnzIRRq2s6kfQ6jjBVCiWs0gqzZKOhDqRyuBrLOB.Su25DshKxCojixVMv2DqiBJtoQraGIjDXeFX8GgaqG5llAvTYLw8LWYNAqVCdWpXIbqnGE9rl52zZxCcMGHKOs9jwb5mE4ygbr9F7LDrznyLFmU2dXxiONTBAdYiZ1JLP9CzSL37FdnL.skoCHN1tJNE_9QBOdC7VV8gTmcVxe1.UIqElc2WIUPMSxEbR.6Tfxh4LAXVG8GG5ifUD4V8dAX5r6ffUB.3yYbGM.Tr7Il13rPkDspR2wFvCGTm6Wm.TTm9vmaKyerrIutP.ew_AxMfL8jppkBUXJMOqN6OSomh_qQ3k5cT9S1bTBTH42HFhOByoUwTKDItks4sbiDn6qbolKcrHfDHUZRNNASW66O.KSnp81zEYBwrI8.9XSI6GjkJ4gQFOhcoYbZCm.zzIadfTYutM8lFI2F4EmFxcB3v5.VIO5YpTzOTlN4.4e2.gok1i0qQYxU6Wx3U0L8xPWsu4NkYqS9ODYuxalsoH8d7exfwwof12iWDdGFYHJBol5.k29raMlUNtYbY4PUKgrcLp859DM2gTGuMEPMybmWf6wKZk2xgaA7ibYfHH3Mc4Pae98HDW9wsQC_vDbeo7RHNXLNReT80PMh5g709cQVkgNePRrCsnNwCFG31B8XVgiSzO5v0XxGcJ0C9F3PGUoWnEznjjEaAyKLCgsmkdD7Yo9qYD42GJ.DMIYb.f4tl43OQE7RdiICVqtNb4sYaRW7P08Bh.89uMo1dTqtW8_WFIB9NSwGRPCipX94ek.IgmJqB8A5W6xAmWb7TDcmVfr17e6fRJtT0wlAZ.wRgHIPO_l_VaO05x380YLQzrmtHR.n3qKtPnvoqkA8qu2jVlv9UuRfBdTNDdvgue6N5sAxQkAiUXMrU.SDp6rYATvt0FQ2CtXDTQzfOF1mia1DOqBfwil1aH.4tw--',
+      refresh_token: 'APgTUl3ttzPHMBlplH5sgKasr3XnV4qt_Cudiw7Tl1LyOMU-'
+    })
+  ])
+
+  console.log(`seeded ${tokens.length} tokens`)
+
   console.log(`seeded successfully`)
 }
 
