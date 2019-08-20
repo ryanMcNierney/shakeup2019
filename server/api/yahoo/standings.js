@@ -6,7 +6,7 @@ const y = new Yahoo
 
 router.get('/', async (req, res) => {
   try {
-    const data = await y.getTeams()
+    const data = await y.getStandings()
     res.send(data)
   } catch (err) {
     res.send(err)
