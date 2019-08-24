@@ -1,5 +1,7 @@
 const db = require('../db')
-const { Team, Standings } = require('../db/models')
+const { Team, Standings, Token } = require('../db/models')
+// dotenv
+require('dotenv').config()
 
 const seed = async () => {
   await db.sync({ force: true })
@@ -92,11 +94,11 @@ const seed = async () => {
     })
   ])
 
-  console.log(`seeded ${teams.length} teams`)
+  console.log(`seeded ${teams.length} into 'teams'`)
 
   const standings = await Promise.all([
     Standings.create({
-      id: 1,
+      teamId: 1,
       team_id: '1',
       record: '0-0-0',
       win: 0,
@@ -110,7 +112,7 @@ const seed = async () => {
       pts_against: 0
     }),
     Standings.create({
-      id: 2,
+      teamId: 2,
       team_id: '2',
       record: '0-0-0',
       win: 0,
@@ -124,7 +126,7 @@ const seed = async () => {
       pts_against: 0
     }),
     Standings.create({
-      id: 3,
+      teamId: 3,
       team_id: '3',
       record: '0-0-0',
       win: 0,
@@ -138,7 +140,7 @@ const seed = async () => {
       pts_against: 0
     }),
     Standings.create({
-      id: 4,
+      teamId: 4,
       team_id: '4',
       record: '0-0-0',
       win: 0,
@@ -152,7 +154,7 @@ const seed = async () => {
       pts_against: 0
     }),
     Standings.create({
-      id: 5,
+      teamId: 5,
       team_id: '5',
       record: '0-0-0',
       win: 0,
@@ -166,7 +168,7 @@ const seed = async () => {
       pts_against: 0
     }),
     Standings.create({
-      id: 6,
+      teamId: 6,
       team_id: '6',
       record: '0-0-0',
       win: 0,
@@ -180,7 +182,7 @@ const seed = async () => {
       pts_against: 0
     }),
     Standings.create({
-      id: 7,
+      teamId: 7,
       team_id: '7',
       record: '0-0-0',
       win: 0,
@@ -194,7 +196,7 @@ const seed = async () => {
       pts_against: 0
     }),
     Standings.create({
-      id: 8,
+      teamId: 8,
       team_id: '8',
       record: '0-0-0',
       win: 0,
@@ -208,7 +210,7 @@ const seed = async () => {
       pts_against: 0
     }),
     Standings.create({
-      id: 9,
+      teamId: 9,
       team_id: '9',
       record: '0-0-0',
       win: 0,
@@ -222,7 +224,7 @@ const seed = async () => {
       pts_against: 0
     }),
     Standings.create({
-      id: 10,
+      teamId: 10,
       team_id: '10',
       record: '0-0-0',
       win: 0,
@@ -236,7 +238,7 @@ const seed = async () => {
       pts_against: 0
     }),
     Standings.create({
-      id: 11,
+      teamId: 11,
       team_id: '11',
       record: '0-0-0',
       win: 0,
@@ -250,7 +252,7 @@ const seed = async () => {
       pts_against: 0
     }),
     Standings.create({
-      id: 12,
+      teamId: 12,
       team_id: '12',
       record: '0-0-0',
       win: 0,
@@ -265,7 +267,17 @@ const seed = async () => {
     })
   ])
 
-  console.log(`seeded ${standings.length} teams into standings`)
+  console.log(`seeded ${standings.length} teams into 'standings'`)
+
+  const tokens = await Promise.all([
+    Token.create({
+      id: 1,
+      access_token: process.env.YAHOO_ACCESS_TOKEN,
+      refresh_token: process.env.YAHOO_REFRESH_TOKEN
+    }),
+  ])
+
+  console.log(`seeded ${tokens.length} tokens into 'tokens'`)
 
   console.log(`seeded successfully`)
 }
