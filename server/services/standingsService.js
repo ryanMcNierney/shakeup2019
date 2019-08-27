@@ -1,6 +1,6 @@
 const Yahoo = require('../auth/yahoo')
 const TopSixService = require('./topSixService')
-const { Standings } = require('../../db/models')
+const { Standings, Team } = require('../../db/models')
 
 class StandingsService {
 
@@ -87,6 +87,27 @@ class StandingsService {
     }
   }
 
+  async get() {
+    try {
+      const standings = []
+      const data = await Standings.findAll({
+        include: [{ model: Team }]
+      })
+
+      data.forEach(team => {
+        standings.push(team.dataValues)
+      })
+
+      // sort by total_win
+      // how to sort by also points???
+      const sorted = standings.sort((a, b) => (a.total_win < b.total_win) ? 1 : (a.total_win === b.total_win) ? ((a.pts_for < b.pts_for) ? 1 : -1) : -1)
+
+      return sorted
+
+    } catch (err) {
+      console.log('Error grabbing standings from the DB', err)
+    }
+  }
 }
 
 module.exports = StandingsService

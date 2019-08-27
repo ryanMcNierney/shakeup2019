@@ -2,17 +2,16 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 
 const TopSix = db.define('top_six', {
-  id: {
+  ts_id: {
     type: Sequelize.STRING,
-    allowNull: false,
-    primaryKey: true
+    allowNull: false
   },
   current_week: {
     type: Sequelize.INTEGER,
     allowNull: false
   },
   team_id: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.STRING,
     allowNull: false
   },
   total: {
