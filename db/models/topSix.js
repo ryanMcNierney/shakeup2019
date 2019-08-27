@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
 
-const TopSixes = db.define('top_six', {
+const TopSix = db.define('top_six', {
   id: {
     type: Sequelize.STRING,
     allowNull: false,
@@ -25,4 +25,4 @@ const TopSixes = db.define('top_six', {
   }
 })
 
-module.exports = TopSixes
+module.exports = TopSix
