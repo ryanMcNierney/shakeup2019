@@ -90,7 +90,9 @@ class StandingsService {
   async get() {
     try {
       const standings = []
-      const data = await Standings.findAll()
+      const data = await Standings.findAll({
+        include: [{ model: Team }]
+      })
 
       data.forEach(team => {
         standings.push(team.dataValues)
