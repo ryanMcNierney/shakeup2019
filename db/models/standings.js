@@ -2,14 +2,6 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 
 const Standings = db.define('standings', {
-  teamId: {
-    type: Sequelize.INTEGER,
-    primaryKey: true,
-    references: {
-      model: 'teams',
-      key: 'id'
-    }
-  },
   team_id: {
     type: Sequelize.STRING,
     allowNull: false
