@@ -1,12 +1,14 @@
 const Yahoo = require('../auth/yahoo')
 const { TopSixes } = require('../../db/models')
 
-class TopSix {
+const testData = require('../../test/test-data/scoreboard.json')
+
+class TopSixService {
 
   async clean() {
     // pull current data
     const y = new Yahoo
-    const scoreboard = await y.getScoreboard()
+    const scoreboard = await testData // update to live!!!
 
     // get current week
     const { current_week } = scoreboard
@@ -27,6 +29,7 @@ class TopSix {
 
         scores.push({
           id,
+          current_week: parseInt(current_week),
           team_id: parseInt(team_id),
           total: parseFloat(total)
         })
@@ -47,18 +50,17 @@ class TopSix {
       }
     })
 
-    return {
-      current_week: parseInt(current_week),
-      sortedScores
-    }
+    console.log('data\n', sortedScores)
+
+    return sortedScores
   }
 
   async updateDb() {
     try {
       const cleanTopSix = await this.clean()
-      const { current_week, sortedScores } = cleanTopSix
+      const { sortedScores } = cleanTopSix
       sortedScores.forEach(team => {
-        const { id, team_id, total, top_six } = team
+        const { id, current_week, team_id, total, top_six } = team
         TopSixes.create({
           id,
           current_week,
@@ -109,4 +111,7 @@ class TopSix {
 
 }
 
-module.exports = TopSix
+const t = new TopSixService
+t.clean()
+
+module.exports = TopSixService
