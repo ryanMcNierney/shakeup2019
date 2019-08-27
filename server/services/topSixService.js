@@ -1,6 +1,5 @@
 const Yahoo = require('../auth/yahoo')
 const { TopSix } = require('../../db/models')
-
 class TopSixService {
 
   async clean() {
@@ -23,12 +22,12 @@ class TopSixService {
         const { total } = team.points
 
         // create table id (round.team_id)
-        const id = current_week + '.' + team_id
+        const ts_id = current_week + '.' + team_id
 
         scores.push({
-          id,
+          ts_id,
           current_week: parseInt(current_week),
-          team_id: parseInt(team_id),
+          team_id,
           total: parseFloat(total)
         })
       })
@@ -54,15 +53,15 @@ class TopSixService {
   async updateDb() {
     try {
       const cleanTopSix = await this.clean()
-      const { sortedScores } = cleanTopSix
-      sortedScores.forEach(team => {
-        const { id, current_week, team_id, total, top_six } = team
+      cleanTopSix.forEach(team => {
+        const { ts_id, current_week, team_id, total, top_six } = team
         TopSix.create({
-          id,
+          ts_id,
           current_week,
           team_id,
           total,
-          top_six
+          top_six,
+          teamId: parseInt(team_id)
         })
           .then(() => {
             console.log('TopSix score is added to the db')
