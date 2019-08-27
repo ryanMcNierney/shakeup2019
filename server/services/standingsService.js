@@ -1,11 +1,12 @@
 const Yahoo = require('../auth/yahoo')
-const TopSix = require('./topSixService')
+const TopSixService = require('./topSixService')
+const { Standings } = require('../../db/models')
 
-class Standings {
+class StandingsService {
 
   async clean() {
     const y = new Yahoo
-    const t = new TopSix
+    const t = new TopSixService
     // pull current data
     const standings = await y.getStandings()
 
@@ -39,12 +40,53 @@ class Standings {
 
       row.total_win = total_win
       row.toal_loss = total_loss
+
+      // add the updated record as a string
+      row.record = '' + total_win + '-' + total_loss + '-' + row.tie
+
     })
 
     return standingsArr
 
   }
 
+  async updateDb() {
+    try {
+      // Get the clean standings
+      const customStandings = await this.clean()
+
+      // Update each to the Standings table
+      customStandings.forEach(async (team) => {
+        const config = {
+          record: team.record,
+          win: team.win,
+          loss: team.loss,
+          tie: team.tie,
+          top_six_win: team.top_six_win,
+          top_six_loss: team.top_six_loss,
+          total_win: team.toal_win,
+          total_loss: team.total_loss,
+          pts_for: team.pts_for,
+          pts_against: team.pts_against
+        }
+
+        // Update where team_id === team_id
+        Standings.update(config, {
+          where: {
+            team_id: team.team_id
+          }
+        })
+          .spread((numberOfAffectedRows) => {
+            console.log('Rows affected =', numberOfAffectedRows)
+          })
+
+      })
+
+    } catch (err) {
+      console.log('Error saving Standings to DB')
+    }
+  }
+
 }
 
-module.exports = Standings
+module.exports = StandingsService
