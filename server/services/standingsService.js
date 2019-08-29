@@ -1,6 +1,8 @@
 const Yahoo = require('../auth/yahoo')
 const TopSixService = require('./topSixService')
 const { Standings, Team } = require('../../db/models')
+const { default: PQueue } = require('p-queue')
+const queue = new PQueue({ concurrency: 1 })
 
 class StandingsService {
 
@@ -55,32 +57,22 @@ class StandingsService {
       // Get the clean standings
       const customStandings = await this.clean()
 
-      // Update each to the Standings table
-      customStandings.forEach(async (team) => {
-        const config = {
-          record: team.record,
-          win: team.win,
-          loss: team.loss,
-          tie: team.tie,
-          top_six_win: team.top_six_win,
-          top_six_loss: team.top_six_loss,
-          total_win: team.toal_win,
-          total_loss: team.total_loss,
-          pts_for: team.pts_for,
-          pts_against: team.pts_against
-        }
-
-        // Update where team_id === team_id
-        Standings.update(config, {
-          where: {
-            team_id: team.team_id
-          }
-        })
-          .spread((numberOfAffectedRows) => {
-            console.log('Rows affected =', numberOfAffectedRows)
+      const standingsQueue = []
+      customStandings.forEach(team => {
+        const standingsPromise = () => {
+          return new Promise(resolve => {
+            resolve(
+              Standings.update(team, {
+                where: { team_id: team.team_id }
+              })
+            )
           })
-
+        }
+        standingsQueue.push(standingsPromise)
       })
+
+      const standings = await queue.addAll(standingsQueue)
+      console.log(`Updated ${standings.length} into the standings table`)
 
     } catch (err) {
       console.log('Error saving Standings to DB')

@@ -1,5 +1,8 @@
 const Yahoo = require('../auth/yahoo')
 const { TopSix } = require('../../db/models')
+const { default: PQueue } = require('p-queue')
+const queue = new PQueue({ concurrency: 1 })
+
 class TopSixService {
 
   async clean() {
@@ -52,21 +55,25 @@ class TopSixService {
 
   async updateDb() {
     try {
-      const cleanTopSix = await this.clean()
-      cleanTopSix.forEach(team => {
-        const { ts_id, current_week, team_id, total, top_six } = team
-        TopSix.create({
-          ts_id,
-          current_week,
-          team_id,
-          total,
-          top_six,
-          teamId: parseInt(team_id)
-        })
-          .then(() => {
-            console.log('TopSix score is added to the db')
+      const topSixArr = await this.clean()
+      const topSixQueue = []
+
+      console.log('topSix', topSixArr)
+
+      topSixArr.forEach(team => {
+        const topSixPromise = () => {
+          return new Promise(resolve => {
+            resolve(
+              TopSix.create(team)
+            )
           })
+        }
+        topSixQueue.push(topSixPromise)
       })
+
+      const topSixes = await queue.addAll(topSixQueue)
+      console.log(`Updated ${topSixes.length} rows into the top_sixes table`)
+
     } catch (err) {
       console.log('Error updating top_six\n', err)
     }
@@ -76,16 +83,16 @@ class TopSixService {
     try {
       const totals = {}
       for (let i = 1; i < 13; i++) {
-        const winsRes = await TopSixes.count({
+        const winsRes = await TopSix.count({
           where: {
-            team_id: i,
+            team_id: '' + i,
             top_six: true
           }
         })
 
-        const lossesRes = await TopSixes.count({
+        const lossesRes = await TopSix.count({
           where: {
-            team_id: i,
+            team_id: '' + i,
             top_six: false
           }
         })
