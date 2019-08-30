@@ -58,8 +58,6 @@ class TopSixService {
       const topSixArr = await this.clean()
       const topSixQueue = []
 
-      console.log('topSix', topSixArr)
-
       topSixArr.forEach(team => {
         const topSixPromise = () => {
           return new Promise(resolve => {
@@ -73,6 +71,8 @@ class TopSixService {
 
       const topSixes = await queue.addAll(topSixQueue)
       console.log(`Updated ${topSixes.length} rows into the top_sixes table`)
+
+      return topSixes
 
     } catch (err) {
       console.log('Error updating top_six\n', err)
