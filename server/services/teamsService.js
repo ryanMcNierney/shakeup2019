@@ -7,7 +7,7 @@ class TeamsService {
 
   async clean() {
     const y = new Yahoo
-    const data = y.getTeams()
+    const data = await y.getTeams()
     const teamsArr = data.teams
 
     const teamsClean = teamsArr.map(team => {
@@ -47,6 +47,7 @@ class TeamsService {
     const teams = await queue.addAll(teamsQueue)
 
     console.log(`Updated ${teams.length} into the teams table`)
+    return teams
 
   }
 

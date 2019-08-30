@@ -11,41 +11,31 @@ class StandingsService {
     const t = new TopSixService
     // pull current data
     const standings = await y.getStandings()
+    const topSixTotals = await t.getTotals()
 
     // clean the standings
     const standingsArr = standings.standings.map(team => {
       const { team_id } = team
       const { wins, losses, ties } = team.standings.outcome_totals
       const { points_for, points_against } = team.standings
+      const top_six_win = topSixTotals[team_id]['win']
+      const top_six_loss = topSixTotals[team_id]['loss']
+      const total_win = top_six_win + wins
+      const total_loss = top_six_loss + losses
+      const record = '' + total_win + '-' + total_loss + '-' + ties
       return {
         team_id,
+        record,
         win: wins,
         loss: losses,
         tie: ties,
+        top_six_win,
+        top_six_loss,
+        total_win,
+        total_loss,
         pts_for: parseFloat(points_for), // only one that is a string
         pts_against: points_against
       }
-    })
-
-    // loop through standingsArr and add topSix totals
-    // standingsArr will change by rank
-    const topSixTotals = await t.getTotals()
-
-    standingsArr.forEach((row) => {
-      const { team_id } = row
-      row.top_six_win = topSixTotals[team_id]['win']
-      row.top_six_loss = topSixTotals[team_id]['loss']
-
-      // add the total_win/total_loss
-      const total_win = row.top_six_win + row.win
-      const total_loss = row.top_six_loss + row.loss
-
-      row.total_win = total_win
-      row.toal_loss = total_loss
-
-      // add the updated record as a string
-      row.record = '' + total_win + '-' + total_loss + '-' + row.tie
-
     })
 
     return standingsArr
