@@ -4,10 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build-client": "webpack",
+    "build-client-watch": "webpack -w",
     "test": "mocha \"./server/**/*.spec.js\"",
-    "start": "node server/index.js",
-    "start-dev": "NODE_ENV='development' nodemon server/index.js",
-    "seed": "node script/seed.js"
+    "start": "node server",
+    "start-dev": "NODE_ENV='development' npm run build-client-watch & NODE_ENV='development' npm run start-server",
+    "start-server": "nodemon server -e html,js,scss --ignore public --ignore client",
+    "seed": "node script/seed.js",
+    "build": "webpack --mode production"
   },
   "repository": {
     "type": "git",
@@ -29,12 +33,22 @@
     "pg": "^7.12.1",
     "pg-hstore": "^2.3.3",
     "qs": "^6.7.0",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "react-router-dom": "^5.0.1",
     "sequelize": "^5.15.0",
     "yahoo-fantasy": "^3.1.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/polyfill": "^7.4.3",
+    "babel-loader": "^8.0.6",
     "chai": "^4.2.0",
     "mocha": "^6.2.0",
-    "supertest": "^4.0.2"
+    "supertest": "^4.0.2",
+    "webpack": "^4.39.3",
+    "webpack-cli": "^3.3.7"
   }
 }
