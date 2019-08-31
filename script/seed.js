@@ -369,156 +369,156 @@ const seed = async () => {
 
   console.log(`seeded ${tokens.length} tokens into 'tokens'`)
 
-  const topSixesQueue = [
-    () => new Promise(resolve => {
-      resolve(
-        TopSix.create({
-          teamId: 1,
-          ts_id: '1.1',
-          current_week: 1,
-          team_id: '1',
-          total: 0,
-          top_six: false
-        })
-      )
-    }),
-    () => new Promise(resolve => {
-      resolve(
-        TopSix.create({
-          teamId: 2,
-          ts_id: '1.2',
-          current_week: 1,
-          team_id: '2',
-          total: 0,
-          top_six: false
-        })
-      )
-    }),
-    () => new Promise(resolve => {
-      resolve(
-        TopSix.create({
-          teamId: 3,
-          ts_id: '1.3',
-          current_week: 1,
-          team_id: '3',
-          total: 0,
-          top_six: false
-        })
-      )
-    }),
-    () => new Promise(resolve => {
-      resolve(
-        TopSix.create({
-          teamId: 4,
-          ts_id: '1.4',
-          current_week: 1,
-          team_id: '4',
-          total: 0,
-          top_six: false
-        })
-      )
-    }),
-    () => new Promise(resolve => {
-      resolve(
-        TopSix.create({
-          teamId: 5,
-          ts_id: '1.5',
-          current_week: 1,
-          team_id: '5',
-          total: 0,
-          top_six: false
-        })
-      )
-    }),
-    () => new Promise(resolve => {
-      resolve(
-        TopSix.create({
-          teamId: 6,
-          ts_id: '1.6',
-          current_week: 1,
-          team_id: '6',
-          total: 0,
-          top_six: false
-        })
-      )
-    }),
-    () => new Promise(resolve => {
-      resolve(
-        TopSix.create({
-          teamId: 7,
-          ts_id: '1.7',
-          current_week: 1,
-          team_id: '7',
-          total: 0,
-          top_six: false
-        })
-      )
-    }),
-    () => new Promise(resolve => {
-      resolve(
-        TopSix.create({
-          teamId: 8,
-          ts_id: '1.8',
-          current_week: 1,
-          team_id: '8',
-          total: 0,
-          top_six: false
-        })
-      )
-    }),
-    () => new Promise(resolve => {
-      resolve(
-        TopSix.create({
-          teamId: 9,
-          ts_id: '1.9',
-          current_week: 1,
-          team_id: '9',
-          total: 0,
-          top_six: false
-        })
-      )
-    }),
-    () => new Promise(resolve => {
-      resolve(
-        TopSix.create({
-          teamId: 10,
-          ts_id: '1.10',
-          current_week: 1,
-          team_id: '10',
-          total: 0,
-          top_six: false
-        })
-      )
-    }),
-    () => new Promise(resolve => {
-      resolve(
-        TopSix.create({
-          teamId: 11,
-          ts_id: '1.11',
-          current_week: 1,
-          team_id: '11',
-          total: 0,
-          top_six: false
-        })
-      )
-    }),
-    () => new Promise(resolve => {
-      resolve(
-        TopSix.create({
-          teamId: 12,
-          ts_id: '1.12',
-          current_week: 1,
-          team_id: '12',
-          total: 0,
-          top_six: false
-        })
-      )
-    })
-  ]
+  // const topSixesQueue = [
+  //   () => new Promise(resolve => {
+  //     resolve(
+  //       TopSix.create({
+  //         teamId: 1,
+  //         ts_id: '1.1',
+  //         current_week: 1,
+  //         team_id: '1',
+  //         total: 0,
+  //         top_six: false
+  //       })
+  //     )
+  //   }),
+  //   () => new Promise(resolve => {
+  //     resolve(
+  //       TopSix.create({
+  //         teamId: 2,
+  //         ts_id: '1.2',
+  //         current_week: 1,
+  //         team_id: '2',
+  //         total: 0,
+  //         top_six: false
+  //       })
+  //     )
+  //   }),
+  //   () => new Promise(resolve => {
+  //     resolve(
+  //       TopSix.create({
+  //         teamId: 3,
+  //         ts_id: '1.3',
+  //         current_week: 1,
+  //         team_id: '3',
+  //         total: 0,
+  //         top_six: false
+  //       })
+  //     )
+  //   }),
+  //   () => new Promise(resolve => {
+  //     resolve(
+  //       TopSix.create({
+  //         teamId: 4,
+  //         ts_id: '1.4',
+  //         current_week: 1,
+  //         team_id: '4',
+  //         total: 0,
+  //         top_six: false
+  //       })
+  //     )
+  //   }),
+  //   () => new Promise(resolve => {
+  //     resolve(
+  //       TopSix.create({
+  //         teamId: 5,
+  //         ts_id: '1.5',
+  //         current_week: 1,
+  //         team_id: '5',
+  //         total: 0,
+  //         top_six: false
+  //       })
+  //     )
+  //   }),
+  //   () => new Promise(resolve => {
+  //     resolve(
+  //       TopSix.create({
+  //         teamId: 6,
+  //         ts_id: '1.6',
+  //         current_week: 1,
+  //         team_id: '6',
+  //         total: 0,
+  //         top_six: false
+  //       })
+  //     )
+  //   }),
+  //   () => new Promise(resolve => {
+  //     resolve(
+  //       TopSix.create({
+  //         teamId: 7,
+  //         ts_id: '1.7',
+  //         current_week: 1,
+  //         team_id: '7',
+  //         total: 0,
+  //         top_six: false
+  //       })
+  //     )
+  //   }),
+  //   () => new Promise(resolve => {
+  //     resolve(
+  //       TopSix.create({
+  //         teamId: 8,
+  //         ts_id: '1.8',
+  //         current_week: 1,
+  //         team_id: '8',
+  //         total: 0,
+  //         top_six: false
+  //       })
+  //     )
+  //   }),
+  //   () => new Promise(resolve => {
+  //     resolve(
+  //       TopSix.create({
+  //         teamId: 9,
+  //         ts_id: '1.9',
+  //         current_week: 1,
+  //         team_id: '9',
+  //         total: 0,
+  //         top_six: false
+  //       })
+  //     )
+  //   }),
+  //   () => new Promise(resolve => {
+  //     resolve(
+  //       TopSix.create({
+  //         teamId: 10,
+  //         ts_id: '1.10',
+  //         current_week: 1,
+  //         team_id: '10',
+  //         total: 0,
+  //         top_six: false
+  //       })
+  //     )
+  //   }),
+  //   () => new Promise(resolve => {
+  //     resolve(
+  //       TopSix.create({
+  //         teamId: 11,
+  //         ts_id: '1.11',
+  //         current_week: 1,
+  //         team_id: '11',
+  //         total: 0,
+  //         top_six: false
+  //       })
+  //     )
+  //   }),
+  //   () => new Promise(resolve => {
+  //     resolve(
+  //       TopSix.create({
+  //         teamId: 12,
+  //         ts_id: '1.12',
+  //         current_week: 1,
+  //         team_id: '12',
+  //         total: 0,
+  //         top_six: false
+  //       })
+  //     )
+  //   })
+  // ]
 
-  const topSixes = await queue.addAll(topSixesQueue)
+  // const topSixes = await queue.addAll(topSixesQueue)
 
-  console.log(`seeded ${topSixes.length} tokens into 'top_sixes'`)
+  // console.log(`seeded ${topSixes.length} tokens into 'top_sixes'`)
 
   console.log(`seeded successfully`)
 }
