@@ -1,0 +1,16 @@
+#header-container {
+  padding: 0 15px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+#logo {
+  height: 25px;
+  width: 25px;
+  margin-right: 10px;
+}
+
+#nav-title {
+  margin-bottom: 0px;
+}
