@@ -1,9 +1,13 @@
 import React from 'react'
+import { Layout } from 'antd'
+import Navbar from './components/navbar/Navbar'
 
 const App = () => {
   return (
     <div>
-      <h1>Shakeup 2019 With React</h1>
+      <Layout>
+        <Navbar />
+      </Layout>
     </div>
   )
 }
