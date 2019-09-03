@@ -1,0 +1,8 @@
+#tabs-container {
+  background-color: #fff;
+  padding: 0 15px;
+}
+
+.ant-tabs-bar {
+  border-bottom: 0;
+}
