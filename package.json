@@ -37,6 +37,7 @@
     "qs": "^6.7.0",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
+    "react-responsive": "^8.0.0",
     "react-router-dom": "^5.0.1",
     "sequelize": "^5.15.0",
     "style-loader": "^1.0.0",
