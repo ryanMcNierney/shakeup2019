@@ -111,6 +111,42 @@ class TopSixService {
     }
   }
 
+  async get() {
+    try {
+      // pull current data
+      const y = new Yahoo
+      const scoreboard = await y.getScoreboard()
+
+      const current_week = '' + scoreboard.current_week // pulls as int
+      const { matchups } = scoreboard.scoreboard
+
+      // get only matchups that match current week
+      const scoresArr = []
+      matchups.forEach(match => {
+        if (current_week === match.week) {
+          match.teams.forEach(team => {
+            const logoObj = team.team_logos[0]
+            scoresArr.push({
+              team_id: team.team_id,
+              name: team.name,
+              logo: logoObj.url,
+              points: parseFloat(team.points.total),
+              projected_points: parseFloat(team.projected_points.total)
+            })
+          })
+        }
+      })
+      // sort based on projected_points
+      const sortedScores = scoresArr.sort((a, b) => ((a.projected_points > b.projected_points) ? -1 : 1))
+
+      return sortedScores
+
+    } catch (err) {
+      console.log(err)
+      return ('Error getting Top-Six scores')
+    }
+  }
+
 }
 
 module.exports = TopSixService
