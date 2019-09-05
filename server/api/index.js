@@ -3,6 +3,7 @@ module.exports = router
 
 router.use('/yahoo', require('./yahoo'))
 router.use('/standings', require('./standings'))
+router.use('/top-six', require('./topSix'))
 
 router.use((req, res, next) => {
   const error = new Error('Not Found')
