@@ -24,7 +24,7 @@ export default class MobileStandings extends Component {
   }
 
   render() {
-    const { standings, loading } = this.state
+    const { standings } = this.state
     const NestedTable = () => {
       const expandedRowRender = (record) => {
         const columns = [
