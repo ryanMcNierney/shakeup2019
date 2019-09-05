@@ -24,7 +24,7 @@ export default class DesktopStandings extends Component {
   }
 
   render() {
-    const { standings, loading } = this.state
+    const { standings } = this.state
     const columns = [
       {
         title: 'Rank',
@@ -43,19 +43,16 @@ export default class DesktopStandings extends Component {
       },
       {
         title: 'Record',
-        width: 100,
         dataIndex: 'record',
         key: 'record'
       },
       {
         title: 'Pts For',
-        width: 100,
         dataIndex: 'pts_for',
         key: 'id' + '-' + 'pts_for'
       },
       {
         title: 'Pts Agnst',
-        width: 100,
         dataIndex: 'pts_against',
         key: 'pts_against'
       },
