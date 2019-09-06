@@ -6,7 +6,7 @@ router.get('/:key', async (req, res) => {
   try {
     const t = new TeamsService
     const key = req.params.key
-    if (key === process.env.KEY) {
+    if (key === process.env.TEAMS_KEY) {
       await t.clean()
       await t.updateDb()
       res.sendStatus(201)
