@@ -137,7 +137,7 @@ class TopSixService {
         }
       })
       // sort based on projected_points
-      const sortedScores = scoresArr.sort((a, b) => ((a.projected_points > b.projected_points) ? -1 : 1))
+      const sortedScores = scoresArr.sort((a, b) => ((a.points > b.points) ? -1 : 1))
       let rank = 1
       for (let i = 0; i < sortedScores.length; i++) {
         sortedScores[i]['rank'] = rank
