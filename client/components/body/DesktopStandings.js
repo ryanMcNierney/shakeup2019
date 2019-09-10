@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import { Table, Avatar } from 'antd'
+import { Table, Avatar, Tag } from 'antd'
 
 export default class DesktopStandings extends Component {
   constructor() {
@@ -68,14 +68,31 @@ export default class DesktopStandings extends Component {
       }
     ]
 
+    let lastUpdate = ''
+    if (standings.length > 0) {
+      const timestamp = standings[0]['updatedAt']
+      const d = new Date(timestamp)
+      const weekdays = new Array(
+        "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"
+      )
+      const day = weekdays[d.getDay()]
+      const month = d.getMonth() + 1
+      const date = d.getDate()
+      lastUpdate = day + ' ' + month + '/' + date
+    }
+
     return (
-      <Table
-        rowKey={record => record.id}
-        className="desktop-table"
-        columns={columns}
-        dataSource={standings}
-        pagination={false}
-      />
+      <div id="standings-container">
+        <p>Last update: <Tag color="gold">{lastUpdate}</Tag></p>
+        <Table
+          rowKey={record => record.id}
+          className="desktop-table"
+          columns={columns}
+          dataSource={standings}
+          pagination={false}
+        />
+      </div>
+
     )
   }
 
