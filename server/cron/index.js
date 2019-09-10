@@ -20,7 +20,7 @@ const updateStandings = async () => {
   return res
 }
 
-(async () => {
+const cronUpdate = async () => {
   console.log('Cron update starting...')
   await updateTeams()
   console.log('Teams updated...')
@@ -30,4 +30,13 @@ const updateStandings = async () => {
   console.log('Standings updated...')
   console.log('Cron update complete.')
   return
-})()
+}
+
+// Heroku scheduler is running everday at 2:30a
+// Only run if it is Tuesday
+const d = new Date()
+const day = d.getDay()
+if (day === 2) {
+  cronUpdate()
+}
+
