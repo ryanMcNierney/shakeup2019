@@ -68,7 +68,11 @@ export default class TopSix extends Component {
                   style={{ marginTop: '10px', border: inTopSix }}
                 >
                   <p>Points           - <Tag color="green">{points}</Tag></p>
-                  <p>Projected Points - <Tag color="blue">{projected_points}</Tag></p>
+                  {
+                    points > 0
+                      ? null
+                      : <p>Projected Points - <Tag color="blue">{projected_points}</Tag></p>
+                  }
                 </Card>
               )
             })
