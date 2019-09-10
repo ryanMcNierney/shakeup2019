@@ -12,7 +12,8 @@
     "start-dev": "NODE_ENV='development' npm run build-client-watch & NODE_ENV='development' npm run start-server",
     "start-server": "nodemon server -e html,js,scss --ignore public --ignore client",
     "seed": "node script/seed.js",
-    "build": "webpack --mode production"
+    "build": "webpack --mode production",
+    "cron-update": "node server/cron"
   },
   "repository": {
     "type": "git",
