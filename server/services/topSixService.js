@@ -53,9 +53,57 @@ class TopSixService {
     return sortedScores
   }
 
-  async updateDb() {
+  async lastWeekClean(week) {
+    const y = new Yahoo
+    const scoreboard = await y.getLastWeekScoreboard(week)
+
+    // get current week
+    const current_week = week
+
+    // get current matachups
+    const { matchups } = scoreboard.scoreboard
+
+    // get clean scores
+    const scores = []
+    matchups.forEach(match => {
+      const { teams } = match
+      teams.forEach(team => {
+        const { team_id } = team
+        const { total } = team.points
+
+        // create table id (round.team_id)
+        const ts_id = current_week + '.' + team_id
+
+        scores.push({
+          ts_id,
+          current_week: parseInt(current_week),
+          team_id,
+          total: parseFloat(total)
+        })
+      })
+    })
+
+    // sort the scores
+    const sortedScores = scores.sort((a, b) => ((a.total > b.total) ? -1 : 1))
+
+    // assign top 6
+    // to-do: how to handle ties??
+    sortedScores.map(team => {
+      const i = sortedScores.indexOf(team)
+      if (i >= 0 && i <= 5) {
+        return team.top_six = true
+      } else {
+        return team.top_six = false
+      }
+    })
+
+    return sortedScores
+
+  }
+
+  async updateDb(week) {
     try {
-      const topSixArr = await this.clean()
+      const topSixArr = await this.lastWeekClean(week)
       const topSixQueue = []
 
       topSixArr.forEach(team => {
@@ -150,6 +198,17 @@ class TopSixService {
       console.log(err)
       return ('Error getting Top-Six scores')
     }
+  }
+
+  async getLastWeek() {
+    // pull current data
+    const y = new Yahoo
+    const scoreboard = await y.getScoreboard()
+
+    const { current_week } = scoreboard
+
+    return current_week - 1
+
   }
 
 }

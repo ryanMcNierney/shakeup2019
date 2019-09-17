@@ -10,7 +10,8 @@ const updateTeams = async () => {
 
 const updateTopSix = async () => {
   const ts = new TopSixService
-  const res = await ts.updateDb()
+  const week = await ts.getLastWeek()
+  const res = await ts.updateDb(week)
   return res
 }
 

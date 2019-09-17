@@ -20,15 +20,15 @@ class StandingsService {
       const { points_for, points_against } = team.standings
       const top_six_win = topSixTotals[team_id]['win']
       const top_six_loss = topSixTotals[team_id]['loss']
-      const total_win = top_six_win + wins
-      const total_loss = top_six_loss + losses
+      const total_win = top_six_win + parseInt(wins)
+      const total_loss = top_six_loss + parseInt(losses)
       const record = '' + total_win + '-' + total_loss + '-' + ties
       return {
         team_id,
         record,
-        win: wins,
-        loss: losses,
-        tie: ties,
+        win: parseInt(wins),
+        loss: parseInt(losses),
+        tie: parseInt(ties),
         top_six_win,
         top_six_loss,
         total_win,

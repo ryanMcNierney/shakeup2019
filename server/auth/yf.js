@@ -65,4 +65,22 @@ const yfGetScoreboard = async (getToken, refreshToken) => {
   }
 }
 
-module.exports = { yfGetTeams, yfGetStandings, yfGetScoreboard }
+const yfGetLastWeekScoreboard = async (getToken, refreshToken, week) => {
+  try {
+    const accessToken = await getToken()
+    await yf.setUserToken(accessToken)
+    const data = await yf.league.scoreboard(process.env.YF_LEAGUE_KEY, week)
+    return data
+  } catch (err) {
+    try {
+      const newAccessToken = await refreshToken()
+      await yf.setUserToken(newAccessToken)
+      const data = await yf.league.scoreboard(process.env.YF_LEAGUE_KEY, week)
+      return data
+    } catch (err) {
+      console.log('Another err', error)
+    }
+  }
+}
+
+module.exports = { yfGetTeams, yfGetStandings, yfGetScoreboard, yfGetLastWeekScoreboard }

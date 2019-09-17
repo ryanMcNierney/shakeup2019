@@ -1,7 +1,7 @@
 const { Token } = require('../../db/models')
 const axios = require('axios')
 const qs = require('qs')
-const { yfGetTeams, yfGetStandings, yfGetScoreboard } = require('./yf')
+const { yfGetTeams, yfGetStandings, yfGetScoreboard, yfGetLastWeekScoreboard } = require('./yf')
 
 class Yahoo {
   async getToken() {
@@ -69,6 +69,15 @@ class Yahoo {
   async getScoreboard() {
     try {
       const data = await yfGetScoreboard(this.getToken, this.refreshToken)
+      return data
+    } catch (err) {
+      return err
+    }
+  }
+
+  async getLastWeekScoreboard(week) {
+    try {
+      const data = await yfGetLastWeekScoreboard(this.getToken, this.refreshToken, week)
       return data
     } catch (err) {
       return err
