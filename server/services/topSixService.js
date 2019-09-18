@@ -211,6 +211,15 @@ class TopSixService {
 
   }
 
+  async getAllDb() {
+    try {
+      const data = await TopSix.findAll()
+      return data
+    } catch (err) {
+      console.log('Error TopSixService.getAllDb', err)
+    }
+  }
+
 }
 
 module.exports = TopSixService
