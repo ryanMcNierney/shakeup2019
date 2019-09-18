@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import { Select, Timeline, Avatar } from 'antd'
+import { Select } from 'antd'
 const { Option } = Select
+import WeeklyTimeline from './WeeklyTimeline'
+import TeamTimeline from './TeamTimeline'
 
 export default class TopSixHistory extends Component {
   constructor() {
@@ -10,9 +12,11 @@ export default class TopSixHistory extends Component {
       topSixData: [],
       teams: [],
       through: [],
-      selectedWeek: 1
+      selectedWeek: 1,
+      selectedTeam: null
     }
-    this.handleChange = this.handleChange.bind(this)
+    this.handleWeekChange = this.handleWeekChange.bind(this)
+    this.handleTeamChange = this.handleTeamChange.bind(this)
   }
 
   async componentDidMount() {
@@ -26,15 +30,20 @@ export default class TopSixHistory extends Component {
     this.setState({ topSixData, teams, through })
   }
 
-  handleChange(value) {
+  handleWeekChange(value) {
     this.setState({ selectedWeek: value })
   }
 
+  async handleTeamChange(value) {
+    await this.setState({ selectedTeam: null })
+    await this.setState({ selectedTeam: value })
+  }
+
   render() {
-    const { through, selectedWeek, topSixData, teams } = this.state
+    const { through, selectedWeek, topSixData, teams, selectedTeam } = this.state
     return (
       <div id="top-six-history-container">
-        <Select defaultValue={selectedWeek} onChange={this.handleChange}>
+        <Select defaultValue={selectedWeek} onChange={this.handleWeekChange}>
           {
             through.map(week => {
               return (
@@ -43,30 +52,31 @@ export default class TopSixHistory extends Component {
             })
           }
         </Select>
-        <div id="weekly-results">
-          <Timeline style={{ marginTop: 20 }}>
-            {
-              topSixData.map(team => {
-                const teamId = parseInt(team.team_id) - 1
-                if (team.current_week === selectedWeek) {
-                  return (
-                    <Timeline.Item
-                      key={team.team_id}
-                      color={team.top_six ? "green" : "red"}
-                    >
-                      {team.total} -
-                      <Avatar
-                        src={teams[teamId]['team_logo']}
-                        style={{ margin: "0 10px" }}
-                      />
-                      {teams[teamId]['name']}
-                    </Timeline.Item>
-                  )
-                }
-              })
-            }
-          </Timeline>
-        </div>
+        <Select
+          defaultValue='Team'
+          onChange={this.handleTeamChange}
+          style={{ width: 180, marginLeft: 20 }}
+          allowClear={true}
+        >
+          {
+            teams.map(team => {
+              return (
+                <Option key={team.id} value={team.team_id}>{team.name}</Option>
+              )
+            })
+          }
+        </Select>
+        {
+          selectedTeam
+            ? <TeamTimeline
+              topSixData={topSixData}
+              teams={teams}
+              selectedTeam={selectedTeam} />
+            : <WeeklyTimeline
+              topSixData={topSixData}
+              teams={teams}
+              selectedWeek={selectedWeek} />
+        }
       </div>
     )
   }
