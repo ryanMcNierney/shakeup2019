@@ -51,6 +51,15 @@ class TeamsService {
 
   }
 
+  async getAllDb() {
+    try {
+      const data = await Team.findAll()
+      return data
+    } catch (err) {
+      console.log('Error TeamsService.getAllDb', err)
+    }
+  }
+
 }
 
 module.exports = TeamsService

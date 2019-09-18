@@ -1,9 +1,10 @@
 import React from 'react'
 import { Tabs } from 'antd'
 import './tabswitch.css'
-import MobileStandings from './MobileStandings'
-import DesktopStandings from './DesktopStandings'
-import TopSix from './TopSix'
+import MobileStandings from './standings/MobileStandings'
+import DesktopStandings from './standings/DesktopStandings'
+import TopSix from './top-six/TopSix'
+import TopSixHistory from './top-six-history/TopSixHistory'
 import { useMediaQuery } from 'react-responsive'
 
 const { TabPane } = Tabs
@@ -24,6 +25,9 @@ const TabSwitch = () => {
         </TabPane>
         <TabPane tab="Top-Six" key="2">
           <TopSix />
+        </TabPane>
+        <TabPane tab="Top-Six-History" key="3">
+          <TopSixHistory />
         </TabPane>
       </Tabs>
     </div>
