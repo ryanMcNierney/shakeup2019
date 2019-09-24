@@ -53,7 +53,9 @@ class TeamsService {
 
   async getAllDb() {
     try {
-      const data = await Team.findAll()
+      const data = await Team.findAll({
+        order: [['id', 'ASC']]
+      })
       return data
     } catch (err) {
       console.log('Error TeamsService.getAllDb', err)
