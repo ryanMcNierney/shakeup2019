@@ -43,7 +43,13 @@ export default class TopSix extends Component {
     const { topSix, loading } = this.state
 
     return (
-      <div id='top-six-container' style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+      <div id='top-six-container'
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          maxWidth: 450
+        }}>
         <Button
           type="primary"
           loading={loading}
