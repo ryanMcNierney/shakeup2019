@@ -81,8 +81,8 @@ class StandingsService {
       })
 
       // sort by total_win
-      // how to sort by also points???
-      const sorted = standings.sort((a, b) => (a.total_win < b.total_win) ? 1 : (a.total_win === b.total_win) ? ((a.pts_for < b.pts_for) ? 1 : -1) : -1)
+      // then by pts_for
+      const sorted = standings.sort((a, b) => (a.total_win < b.total_win) ? 1 : (a.total_win === b.total_win) ? ((parseFloat(a.pts_for) < parseFloat(b.pts_for)) ? 1 : -1) : -1)
 
       return sorted
 
